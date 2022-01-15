@@ -12,3 +12,8 @@ services:
     ports:
       - 5423:5432
     user: root
+    volumes:
+      - pg-data-idol:/var/lib/pgdata
+volumes:
+  pg-data-idol:
+    driver: local
