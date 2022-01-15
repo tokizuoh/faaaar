@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: faaaar-server
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+      - ./server:/go/src
   postgresql:
     build:
       context: ./postgresql
