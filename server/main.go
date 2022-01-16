@@ -34,7 +34,7 @@ type idol struct {
 
 func main() {
 	dsn := datasourceName{
-		host:     "127.0.0.1",
+		host:     "172.26.0.1", // TODO: composeで固定化する
 		port:     5423,
 		user:     "postgres",
 		password: "postgres",
