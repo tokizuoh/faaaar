@@ -2,13 +2,33 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
 )
 
+type datasourceName struct {
+	host     string
+	port     int
+	user     string
+	password string
+	dbName   string
+}
+
+func getDataSourceNameString(dsn datasourceName) string {
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbName)
+}
+
 func main() {
-	db, err := sql.Open("postgres", "host=127.0.0.1 port=5423 user=postgres password=postgres dbname=postgres")
+	dsn := datasourceName{
+		host:     "127.0.0.1",
+		port:     5423,
+		password: "postgres",
+		dbName:   "postgres",
+	}
+	dsnString := getDataSourceNameString(dsn)
+	db, err := sql.Open("postgres", dsnString)
 	defer db.Close()
 
 	if err != nil {
