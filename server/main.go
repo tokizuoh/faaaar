@@ -24,6 +24,7 @@ func main() {
 	dsn := datasourceName{
 		host:     "127.0.0.1",
 		port:     5423,
+		user:     "postgres",
 		password: "postgres",
 		dbName:   "postgres",
 	}
