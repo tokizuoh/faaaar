@@ -2,9 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 
+	"github.com/graphql-go/graphql"
 	_ "github.com/lib/pq"
 )
 
@@ -60,4 +62,41 @@ func main() {
 		rows.Scan(&i.id, &i.name, &i.age, &i.height, &i.birth_place, &i.birth_day, &i.blood_type, &i.unit)
 		idols = append(idols, i)
 	}
+
+	fields := graphql.Fields{
+		"age": &graphql.Field{
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				return "hoge", nil
+			},
+		},
+	}
+	rootQuery := graphql.ObjectConfig{
+		Name:   "RootQuery",
+		Fields: fields,
+	}
+
+	schemeConfig := graphql.SchemaConfig{
+		Query: graphql.NewObject(rootQuery),
+	}
+
+	scheme, err := graphql.NewSchema(schemeConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	query := `
+		{
+			age
+		}
+	`
+
+	params := graphql.Params{Schema: scheme, RequestString: query}
+	r := graphql.Do(params)
+	if len(r.Errors) > 0 {
+		log.Fatal(r.Errors)
+	}
+
+	rJSON, _ := json.Marshal(r)
+	log.Printf("%s \n", rJSON) // {"data":{"age":"hoge"}}
 }
