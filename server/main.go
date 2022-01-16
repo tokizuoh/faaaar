@@ -14,10 +14,11 @@ type datasourceName struct {
 	user     string
 	password string
 	dbName   string
+	sslMode  string
 }
 
 func getDataSourceNameString(dsn datasourceName) string {
-	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbName)
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbName, dsn.sslMode)
 }
 
 func main() {
@@ -27,6 +28,7 @@ func main() {
 		user:     "postgres",
 		password: "postgres",
 		dbName:   "postgres",
+		sslMode:  "disable",
 	}
 	dsnString := getDataSourceNameString(dsn)
 	db, err := sql.Open("postgres", dsnString)
