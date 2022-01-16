@@ -1,8 +1,8 @@
 build:
 	docker-compose up --build -d
-# TODO: Makeでは `$` 以降が読まれないので対応する
-# stop:
-# docker stop $(docker ps -q)
+stop:
+	docker stop faaaar-server
+	docker stop postgres-syani
 run:
 	docker-compose exec server go run main.go
 db-e:
