@@ -1,6 +1,6 @@
 create table idol
 (
-    id integer not null, 
+    id integer not null,
     name varchar not null,
     age integer not null,
     height integer not null,
@@ -11,3 +11,12 @@ create table idol
     PRIMARY KEY (id)
 );
 comment on table idol is 'idol_list.csv';
+
+create table unit
+(
+    id varchar not null,
+    name varchar not null,
+    idols varchar not null,
+    PRIMARY KEY (id)
+);
+comment on table idol is 'unit_list.csv';
