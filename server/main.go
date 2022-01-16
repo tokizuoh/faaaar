@@ -23,15 +23,56 @@ func getDataSourceNameString(dsn datasourceName) string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbName, dsn.sslMode)
 }
 
-type idol struct {
-	id          string
-	name        string
-	age         int
-	height      int
-	birth_place string
-	birth_day   string
-	blood_type  string
-	unit        string
+type Idol struct {
+	Id          string
+	Name        string
+	Age         int
+	Height      int
+	Birth_place string
+	Birth_day   string
+	Blood_type  string
+	Unit        string
+}
+
+var IdolType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "Idol",
+	Fields: graphql.Fields{
+		"id": &graphql.Field{
+			Type: graphql.Int,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				idol := p.Source.(Idol)
+				return idol.Id, nil
+			},
+		},
+		"name": &graphql.Field{
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				idol := p.Source.(Idol)
+				return idol.Name, nil
+			},
+		},
+	},
+})
+
+func getSameAgeIdols(db *sql.DB, age int) []Idol {
+	st := fmt.Sprintf("select * from idol where age=%d", age)
+	rows, err := db.Query(st)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var result []Idol
+	for rows.Next() {
+		var i Idol
+		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birth_place, &i.Birth_day, &i.Blood_type, &i.Unit)
+
+		if i.Age == age {
+			result = append(result, i)
+		}
+
+	}
+
+	return result
 }
 
 func main() {
@@ -51,52 +92,51 @@ func main() {
 		log.Fatal(err)
 	}
 
-	rows, err := db.Query("SELECT * FROM idol")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var idols []idol
-	for rows.Next() {
-		var i idol
-		rows.Scan(&i.id, &i.name, &i.age, &i.height, &i.birth_place, &i.birth_day, &i.blood_type, &i.unit)
-		idols = append(idols, i)
-	}
-
-	fields := graphql.Fields{
-		"age": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				return "hoge", nil
+	scheme, err := graphql.NewSchema(graphql.SchemaConfig{
+		Query: graphql.NewObject(graphql.ObjectConfig{
+			Name: "Query",
+			Fields: graphql.Fields{
+				"idols": &graphql.Field{
+					Type: graphql.NewList(IdolType),
+					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+						ageQuery, ok := p.Args["age"].(int)
+						if ok {
+							result := getSameAgeIdols(db, ageQuery)
+							return result, nil
+						}
+						return nil, nil
+					},
+					Args: graphql.FieldConfigArgument{
+						"age": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+					},
+				},
 			},
-		},
-	}
-	rootQuery := graphql.ObjectConfig{
-		Name:   "RootQuery",
-		Fields: fields,
-	}
-
-	schemeConfig := graphql.SchemaConfig{
-		Query: graphql.NewObject(rootQuery),
-	}
-
-	scheme, err := graphql.NewSchema(schemeConfig)
+		}),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	query := `
 		{
-			age
+			idols(age: 20) {
+				id
+				name
+			}
 		}
 	`
 
-	params := graphql.Params{Schema: scheme, RequestString: query}
+	params := graphql.Params{
+		Schema:        scheme,
+		RequestString: query,
+	}
 	r := graphql.Do(params)
 	if len(r.Errors) > 0 {
 		log.Fatal(r.Errors)
 	}
 
 	rJSON, _ := json.Marshal(r)
-	log.Printf("%s \n", rJSON) // {"data":{"age":"hoge"}}
+	log.Printf("%s \n", rJSON) // {"data":{"idols":[{"id":16,"name":"有栖川 夏葉"},{"id":26,"name":"斑鳩 ルカ"}]}}
 }
