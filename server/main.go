@@ -77,8 +77,8 @@ func getSameAgeIdols(db *sql.DB, age int) []Idol {
 
 func main() {
 	dsn := datasourceName{
-		host:     "172.26.0.1", // TODO: composeで固定化する
-		port:     5423,
+		host:     "faaaar-db",
+		port:     5432,
 		user:     "postgres",
 		password: "postgres",
 		dbname:   "postgres",
