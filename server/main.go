@@ -24,14 +24,14 @@ func getDataSourceNameString(dsn datasourceName) string {
 }
 
 type Idol struct {
-	Id          string
-	Name        string
-	Age         int
-	Height      int
-	Birth_place string
-	Birth_day   string
-	Blood_type  string
-	Unit        string
+	Id         string
+	Name       string
+	Age        int
+	Height     int
+	Birthplace string
+	Birthday   string
+	Bloodtype  string
+	Unit       string
 }
 
 var IdolType = graphql.NewObject(graphql.ObjectConfig{
@@ -64,7 +64,7 @@ func getSameAgeIdols(db *sql.DB, age int) []Idol {
 	var result []Idol
 	for rows.Next() {
 		var i Idol
-		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birth_place, &i.Birth_day, &i.Blood_type, &i.Unit)
+		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype, &i.Unit)
 
 		if i.Age == age {
 			result = append(result, i)
