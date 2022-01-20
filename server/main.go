@@ -16,11 +16,11 @@ type datasourceName struct {
 	user     string
 	password string
 	dbname   string
-	sslMode  string
+	sslmode  string
 }
 
 func getDataSourceNameString(dsn datasourceName) string {
-	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslMode)
+	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
 }
 
 type Idol struct {
@@ -82,7 +82,7 @@ func main() {
 		user:     "postgres",
 		password: "postgres",
 		dbname:   "postgres",
-		sslMode:  "disable",
+		sslmode:  "disable",
 	}
 	dsnString := getDataSourceNameString(dsn)
 	db, err := sql.Open("postgres", dsnString)
