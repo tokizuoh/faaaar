@@ -10,11 +10,11 @@ services:
       - 8080:8080
     volumes:
       - ./server:/go/src
-  postgresql:
+  db:
     build:
       context: ./postgresql
       dockerfile: Dockerfile
-    container_name: postgres-syani
+    container_name: faaaar-db
     environment:
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=postgres
