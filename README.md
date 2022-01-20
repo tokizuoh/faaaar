@@ -27,3 +27,16 @@ docker-compose exec server go run main.go
 #
 
 ```
+  
+## Development
+  
+### Add issue number to the commit message
+  
+1. Write the content of `./git-hooks/commit-msg` in `.git/hooks/commit-msg`.
+  
+2. Grant permission to shell-script.  
+  
+```bash
+chmod +x .git/hooks/commit-msg
+```
+   
