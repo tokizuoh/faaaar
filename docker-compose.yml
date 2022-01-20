@@ -12,7 +12,7 @@ services:
       - ./server:/go/src
   db:
     build:
-      context: ./postgresql
+      context: ./db
       dockerfile: Dockerfile
     container_name: faaaar-db
     environment:
