@@ -16,7 +16,6 @@ create table unit
 (
     id varchar not null,
     name varchar not null,
-    idols varchar not null,
     PRIMARY KEY (id)
 );
 comment on table idol is 'unit_list.csv';
