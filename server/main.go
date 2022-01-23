@@ -148,6 +148,6 @@ func main() {
 		log.Fatal(r.Errors)
 	}
 
-	rJSON, _ := json.Marshal(r)
-	log.Printf("%s \n", rJSON) // {"data":{"idols":[{"id":16,"name":"有栖川 夏葉"},{"id":26,"name":"斑鳩 ルカ"}]}}
+	output, err := json.MarshalIndent(r, "", "\t")
+	log.Printf("%s \n", output)
 }
