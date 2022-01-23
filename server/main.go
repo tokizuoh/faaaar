@@ -34,6 +34,10 @@ type Idol struct {
 	Unit       string
 }
 
+type Option struct {
+	age int
+}
+
 var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Idol",
 	Fields: graphql.Fields{
@@ -54,9 +58,14 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-func getSameAgeIdols(db *sql.DB, age int) []Idol {
-	st := fmt.Sprintf("select * from idol where age=%d", age)
-	rows, err := db.Query(st)
+func getSameAgeIdols(db *sql.DB, o Option) []Idol {
+	var stx string
+	if o.age == 0 {
+		stx = "select * from idol order by id"
+	} else {
+		stx = fmt.Sprintf("select * from idol where age=%d order by id", o.age)
+	}
+	rows, err := db.Query(stx)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -66,7 +75,7 @@ func getSameAgeIdols(db *sql.DB, age int) []Idol {
 		var i Idol
 		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype, &i.Unit)
 
-		if i.Age == age {
+		if o.age == 0 || i.Age == o.age {
 			result = append(result, i)
 		}
 
@@ -101,10 +110,12 @@ func main() {
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 						ageQuery, ok := p.Args["age"].(int)
 						if ok {
-							result := getSameAgeIdols(db, ageQuery)
+							result := getSameAgeIdols(db, Option{age: ageQuery})
+							return result, nil
+						} else {
+							result := getSameAgeIdols(db, Option{})
 							return result, nil
 						}
-						return nil, nil
 					},
 					Args: graphql.FieldConfigArgument{
 						"age": &graphql.ArgumentConfig{
@@ -133,10 +144,10 @@ func main() {
 		RequestString: query,
 	}
 	r := graphql.Do(params)
-	if len(r.Errors) > 0 {
+	if r.HasErrors() {
 		log.Fatal(r.Errors)
 	}
 
-	rJSON, _ := json.Marshal(r)
-	log.Printf("%s \n", rJSON) // {"data":{"idols":[{"id":16,"name":"有栖川 夏葉"},{"id":26,"name":"斑鳩 ルカ"}]}}
+	output, err := json.MarshalIndent(r, "", "\t")
+	log.Printf("%s \n", output)
 }
