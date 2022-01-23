@@ -103,8 +103,10 @@ func main() {
 						if ok {
 							result := getSameAgeIdols(db, ageQuery)
 							return result, nil
+						} else {
+							// TODO: [#12] 全件返す処理を追加
+							return nil, nil
 						}
-						return nil, nil
 					},
 					Args: graphql.FieldConfigArgument{
 						"age": &graphql.ArgumentConfig{
