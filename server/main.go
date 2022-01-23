@@ -146,7 +146,7 @@ func main() {
 
 	query := `
 		{
-			idols(age: 20) {
+			idols {
 				id
 				name
 				age
