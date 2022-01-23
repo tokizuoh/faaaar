@@ -2,7 +2,8 @@
 Learn GraphQL with THE IDOLM@STER SHINY COLORS.
 
 ## Getting Started
-The following is a simple example which get information about 20-year-old idols.
+  
+Write the following Query in `server/query.txt`.
   
 ### Query
 
