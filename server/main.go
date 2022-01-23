@@ -133,7 +133,7 @@ func main() {
 		RequestString: query,
 	}
 	r := graphql.Do(params)
-	if len(r.Errors) > 0 {
+	if r.HasErrors() {
 		log.Fatal(r.Errors)
 	}
 
