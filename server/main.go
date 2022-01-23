@@ -129,6 +129,8 @@ func readQuery(filepath string) (string, error) {
 	return string(b), nil
 }
 
+const QUERY_FILE_PATH = "./query.txt"
+
 func main() {
 	dsn := datasourceName{
 		host:     "faaaar-db",
@@ -175,7 +177,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	query, err := readQuery("./query.txt")
+	query, err := readQuery(QUERY_FILE_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
