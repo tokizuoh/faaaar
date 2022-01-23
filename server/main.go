@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 
 	"github.com/graphql-go/graphql"
@@ -119,6 +120,17 @@ func getSameAgeIdols(db *sql.DB, o Option) []Idol {
 	return result
 }
 
+func readQuery(filepath string) (string, error) {
+	b, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+const QUERY_FILE_PATH = "./query.txt"
+
 func main() {
 	dsn := datasourceName{
 		host:     "faaaar-db",
@@ -165,19 +177,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	query := `
-		{
-			idols {
-				id
-				name
-				age
-				height
-				birth_place
-				birth_day
-				blood_type
-			}
-		}
-	`
+	query, err := readQuery(QUERY_FILE_PATH)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	params := graphql.Params{
 		Schema:        scheme,

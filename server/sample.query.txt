@@ -1,0 +1,11 @@
+{
+	idols {
+		id
+		age
+		name
+		height
+		birth_place
+		birth_day
+		blood_type
+	}
+}
