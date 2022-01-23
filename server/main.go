@@ -62,6 +62,13 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 				return idol.Age, nil
 			},
 		},
+		"height": &graphql.Field{
+			Type: graphql.Int,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				idol := p.Source.(Idol)
+				return idol.Height, nil
+			},
+		},
 	},
 })
 
@@ -143,6 +150,7 @@ func main() {
 				id
 				name
 				age
+				height
 			}
 		}
 	`
