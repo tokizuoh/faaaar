@@ -3,3 +3,6 @@ copy idol(id,name,age,height,birth_place,birth_day,blood_type)
 
 copy unit(id,name)
   from '/docker-entrypoint-initdb.d/unit_list.csv' with csv header;
+
+copy idol_unit(id,idol, unit)
+  from '/docker-entrypoint-initdb.d/idol_unit.csv' with csv header;

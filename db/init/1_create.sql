@@ -18,3 +18,12 @@ create table unit
     PRIMARY KEY (id)
 );
 comment on table idol is 'unit_list.csv';
+
+create table idol_unit
+(
+    id integer not null,
+    idol integer not null,
+    unit varchar not null,
+    PRIMARY KEY (id)
+);
+comment on table idol is 'idol_unit.csv';
