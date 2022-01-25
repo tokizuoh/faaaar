@@ -7,7 +7,6 @@ create table idol
     birth_place varchar not null,
     birth_day varchar not null,
     blood_type varchar not null,
-    unit varchar,
     PRIMARY KEY (id)
 );
 comment on table idol is 'idol_list.csv';
