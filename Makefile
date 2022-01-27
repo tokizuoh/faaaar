@@ -1,5 +1,7 @@
 build:
 	docker-compose up --build -d
+build-db:
+	docker-compose up -d --build db
 stop:
 	docker stop faaaar-server
 	docker stop faaaar-db
