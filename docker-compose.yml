@@ -24,6 +24,7 @@ services:
     user: root
     volumes:
       - pg-data-idol:/var/lib/pgdata
+      - ./db:/db
 volumes:
   pg-data-idol:
     driver: local
