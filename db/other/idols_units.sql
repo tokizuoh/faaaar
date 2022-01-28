@@ -1,18 +1,18 @@
 SELECT
-    i.id          AS id,
-    i.name        AS name,
-    i.age         AS age,
-    i.height      AS height,
-    i.birth_place AS birth_place,
-    i.blood_type  AS blood_type,
-    u.name        AS unit
+    idl.id          AS id,
+    idl.name        AS name,
+    idl.age         AS age,
+    idl.height      AS height,
+    idl.birth_place AS birth_place,
+    idl.blood_type  AS blood_type,
+    unt.name        AS unit
 FROM
-    idol i
+    idol idl
 INNER JOIN
-    idol_unit iu
+    idol_unit idlunt
 ON
-    i.id = iu.idol
+    idl.id = idlunt.idol
 INNER JOIN
-    unit u
+    unit unt
 ON
-    iu.unit = u.id;
+    idlunt.unit = unt.id;
