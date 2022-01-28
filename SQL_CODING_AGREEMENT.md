@@ -1,3 +1,11 @@
+# SQLコーディング規約
+
+- インデントは半角スペース4つ
+- 予約語に対しては、大文字を使用
+- テーブルエイリアスは母音を抜かした子音字を利用
+  - ex.) idol -> idl
+
+```sql
 SELECT
     idl.id          AS id,
     idl.name        AS name,
@@ -16,3 +24,4 @@ INNER JOIN
     unit unt
 ON
     idlunt.unit = unt.id;
+```
