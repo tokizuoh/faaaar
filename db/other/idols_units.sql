@@ -15,4 +15,4 @@ ON
 INNER JOIN
     unit u
 ON
-    iu.unit=u.id;
+    iu.unit = u.id;
