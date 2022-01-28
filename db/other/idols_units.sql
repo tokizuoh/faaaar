@@ -1,11 +1,11 @@
 SELECT
-    i.id as id,
-    i.name as name,
-    i.age as age,
-    i.height as height,
-    i.birth_place as birth_place,
-    i.blood_type as blood_type,
-    u.name as unit
+    i.id AS id,
+    i.name AS name,
+    i.age AS age,
+    i.height AS height,
+    i.birth_place AS birth_place,
+    i.blood_type AS blood_type,
+    u.name AS unit
 FROM
     idol i
 INNER JOIN
