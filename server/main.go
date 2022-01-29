@@ -37,23 +37,7 @@ func readQuery(filepath string) (string, error) {
 
 const QUERY_FILE_PATH = "./query.txt"
 
-func main() {
-	http.HandleFunc("/graphql", func(rw http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
-
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		hoge := string(body)
-		log.Println(hoge)
-	})
-	http.ListenAndServe(":8080", nil)
-	return
-
-	// TODO: [#30] 以下メソッドに切り出す
-
+func executeQuery(query string) {
 	dsn := datasourceName{
 		host:     "faaaar-db",
 		port:     5432,
@@ -125,11 +109,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	query, err := readQuery(QUERY_FILE_PATH)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	params := graphql.Params{
 		Schema:        scheme,
 		RequestString: query,
@@ -142,4 +121,19 @@ func main() {
 
 	output, err := json.MarshalIndent(r, "", "\t")
 	log.Printf("%s \n", output)
+}
+
+func main() {
+	http.HandleFunc("/graphql", func(rw http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		query := string(body)
+		executeQuery(query)
+	})
+	http.ListenAndServe(":8080", nil)
 }
