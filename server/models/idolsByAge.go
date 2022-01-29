@@ -82,6 +82,7 @@ func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 	stx, err := readSQLFile("./sqls/get_idols_by_age.sql")
 
 	if o.Age != 0 {
+		// TODO: [#27] 「SQLファイル読み込み + WHERE句追加」処理を共通化する
 		stx += fmt.Sprintf(" WHERE age=%d", o.Age)
 	}
 

@@ -54,6 +54,7 @@ func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
 	}
 
 	if o.IdolId != 0 {
+		// TODO: [#27] 「SQLファイル読み込み + WHERE句追加」処理を共通化する
 		stx += fmt.Sprintf(" WHERE idl.id=%d", o.IdolId)
 		log.Println(stx)
 	}
