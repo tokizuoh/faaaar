@@ -91,7 +91,7 @@ func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 		where: where,
 	}
 
-	rows, err := db.Query(cfg.Make())
+	rows, err := db.Query(cfg.Query())
 	if err != nil {
 		log.Fatal(err)
 	}

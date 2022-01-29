@@ -63,7 +63,7 @@ func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
 		where: where,
 	}
 
-	rows, err := db.Query(cfg.Make())
+	rows, err := db.Query(cfg.Query())
 	if err != nil {
 		log.Fatal(err)
 	}

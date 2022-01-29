@@ -5,7 +5,7 @@ type Sqlcfg struct {
 	where string
 }
 
-func (s Sqlcfg) Make() string {
+func (s Sqlcfg) Query() string {
 	if s.where == "" {
 		return s.base
 	}
