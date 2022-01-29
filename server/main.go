@@ -76,6 +76,14 @@ func main() {
 						},
 					},
 				},
+				"units": &graphql.Field{
+					Type: graphql.NewList(models.UnitType),
+					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+						// TODO: [#22] IdolIdで指定したアイドルの所属ユニットを返すようにする
+						result := models.GetUnitsByIdolID(db, models.UnitsByIdolIdOption{IdolId: 1})
+						return result, nil
+					},
+				},
 			},
 		}),
 	})
