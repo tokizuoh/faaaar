@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"io/ioutil"
 	"log"
 
 	"github.com/graphql-go/graphql"
@@ -37,14 +38,25 @@ var UnitType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) []Unit {
-	var stx string
-	if o.IdolId == 0 {
-		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
-		stx = "SELECT idl.id          AS id, idl.name        AS name, idl.age         AS age, idl.height      AS height, idl.birth_place AS birth_place, idl.blood_type  AS blood_type, unt.name        AS unit FROM idol idl INNER JOIN idol_unit idlunt ON idl.id = idlunt.idol INNER JOIN unit unt ON idlunt.unit = unt.id"
-	} else {
-		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
-		stx = fmt.Sprintf("SELECT idl.id          AS id, unt.name        AS unit FROM idol idl INNER JOIN idol_unit idlunt ON idl.id = idlunt.idol INNER JOIN unit unt ON idlunt.unit = unt.id WHERE idl.id=%d", o.IdolId)
+func readSQLFile(filepath string) (string, error) {
+	b, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
+	stx, err := readSQLFile("./sqls/get_units_by_idol_id.sql")
+	if err != nil {
+		return nil, err
+	}
+
+	if o.IdolId != 0 {
+		// TODO: [#27] 「SQLファイル読み込み + WHERE句追加」処理を共通化する
+		stx += fmt.Sprintf(" WHERE idl.id=%d", o.IdolId)
+		log.Println(stx)
 	}
 
 	rows, err := db.Query(stx)
@@ -60,5 +72,5 @@ func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) []Unit {
 		result = append(result, u)
 	}
 
-	return result
+	return result, nil
 }
