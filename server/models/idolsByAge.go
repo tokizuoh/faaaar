@@ -81,8 +81,10 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 	var stx string
 	if o.Age == 0 {
+		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
 		stx = "select * from idol order by id"
 	} else {
+		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
 		stx = fmt.Sprintf("select * from idol where age=%d order by id", o.Age)
 	}
 	rows, err := db.Query(stx)
