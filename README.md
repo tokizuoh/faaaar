@@ -10,12 +10,56 @@ $ make run
 
 ## Usage
 
+### Get idolList (by age)
+
 ```bash
-# get idolList (by age)
 $ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
 
-# get unitList (by idolId)
+# 2022/01/29 15:31:55 {
+#         "data": {
+#                 "idols": [
+#                         {
+#                                 "age": 20,
+#                                 "birth_day": "8/16",
+#                                 "birth_place": "愛知県",
+#                                 "blood_type": "B",
+#                                 "height": 168,
+#                                 "id": 16,
+#                                 "name": "有栖川 夏葉"
+#                         },
+#                         {
+#                                 "age": 20,
+#                                 "birth_day": "1/31",
+#                                 "birth_place": "神奈川県",
+#                                 "blood_type": "A",
+#                                 "height": 161,
+#                                 "id": 26,
+#                                 "name": "斑鳩 ルカ"
+#                         }
+#                 ]
+#         }
+# } 
+```
+
+### Get unitList (by idolId)
+
+```bash
 $ curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
+
+# 2022/01/29 15:33:12 {
+#         "data": {
+#                 "units": [
+#                         {
+#                                 "id": "2",
+#                                 "name": "イルミネーションスターズ"
+#                         },
+#                         {
+#                                 "id": "2",
+#                                 "name": "Luna"
+#                         }
+#                 ]
+#         }
+# } 
 ```
   
 ## Development
