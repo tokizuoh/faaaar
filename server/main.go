@@ -45,6 +45,7 @@ func main() {
 		dbname:   "postgres",
 		sslmode:  "disable",
 	}
+
 	dsnString := getDataSourceNameString(dsn)
 	db, err := sql.Open("postgres", dsnString)
 	defer db.Close()
@@ -78,6 +79,7 @@ func main() {
 			},
 		}),
 	})
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,6 +93,7 @@ func main() {
 		Schema:        scheme,
 		RequestString: query,
 	}
+
 	r := graphql.Do(params)
 	if r.HasErrors() {
 		log.Fatal(r.Errors)
