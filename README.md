@@ -1,73 +1,21 @@
 # faaaar
 Learn GraphQL with THE IDOLM@STER SHINY COLORS.
 
-## Getting Started
-  
-Write the following Query in `server/query.txt`.
-  
-### Query
-
-```bash
-query := `
-	{
-		idols {
-			id
-			name
-			age
-			height
-			birth_place
-			birth_day
-			blood_type
-		}
-	}
-`
-```
-
-### Build & Run
+## Setup
 
 ```bash
 $ make build
-...
-Starting postgres-syani  ... done
-Recreating faaaar-server ... done
-
 $ make run
-docker-compose exec server go mod download
-docker-compose exec server go run main.go
-2022/01/23 06:08:34 {
-        "data": {
-                "idols": [
-                        {
-                                "age": 16,
-                                "birth_day": "4/25",
-                                "birth_place": "東京都",
-                                "blood_type": "A",
-                                "height": 155,
-                                "id": 1,
-                                "name": "櫻木 真乃"
-                        },
-                        {
-                                "age": 16,
-                                "birth_day": "7/22",
-                                "birth_place": "アメリカ マサチューセッツ州",
-                                "blood_type": "O",
-                                "height": 157,
-                                "id": 2,
-                                "name": "八宮 めぐる"
-                        },
-                        ...
-                        {
-                                "age": 20,
-                                "birth_day": "1/31",
-                                "birth_place": "神奈川県",
-                                "blood_type": "A",
-                                "height": 161,
-                                "id": 26,
-                                "name": "斑鳩 ルカ"
-                        }
-                ]
-        }
-} 
+```
+
+## Usage
+
+```bash
+# get idolList (by age)
+$ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
+
+# get unitList (by idolId)
+$ curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
 ```
   
 ## Development
@@ -79,6 +27,6 @@ docker-compose exec server go run main.go
 2. Grant permission to shell-script.  
   
 ```bash
-chmod +x .git/hooks/commit-msg
+$ chmod +x .git/hooks/commit-msg
 ```
    
