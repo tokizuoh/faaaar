@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"github/tokizuoh/faaaar/server/models"
 	"io/ioutil"
 	"log"
 
@@ -24,101 +25,101 @@ func getDataSourceNameString(dsn datasourceName) string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
 }
 
-type Idol struct {
-	Id         string
-	Name       string
-	Age        int
-	Height     int
-	Birthplace string
-	Birthday   string
-	Bloodtype  string
-	Unit       string
-}
+// type Idol struct {
+// 	Id         string
+// 	Name       string
+// 	Age        int
+// 	Height     int
+// 	Birthplace string
+// 	Birthday   string
+// 	Bloodtype  string
+// 	Unit       string
+// }
 
-type Option struct {
-	age int
-}
+// type Option struct {
+// 	age int
+// }
 
-var IdolType = graphql.NewObject(graphql.ObjectConfig{
-	Name: "Idol",
-	Fields: graphql.Fields{
-		"id": &graphql.Field{
-			Type: graphql.Int,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Id, nil
-			},
-		},
-		"name": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Name, nil
-			},
-		},
-		"age": &graphql.Field{
-			Type: graphql.Int,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Age, nil
-			},
-		},
-		"height": &graphql.Field{
-			Type: graphql.Int,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Height, nil
-			},
-		},
-		"birth_place": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Birthplace, nil
-			},
-		},
-		"birth_day": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Birthday, nil
-			},
-		},
-		"blood_type": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				idol := p.Source.(Idol)
-				return idol.Bloodtype, nil
-			},
-		},
-	},
-})
+// var IdolType = graphql.NewObject(graphql.ObjectConfig{
+// 	Name: "Idol",
+// 	Fields: graphql.Fields{
+// 		"id": &graphql.Field{
+// 			Type: graphql.Int,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Id, nil
+// 			},
+// 		},
+// 		"name": &graphql.Field{
+// 			Type: graphql.String,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Name, nil
+// 			},
+// 		},
+// 		"age": &graphql.Field{
+// 			Type: graphql.Int,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Age, nil
+// 			},
+// 		},
+// 		"height": &graphql.Field{
+// 			Type: graphql.Int,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Height, nil
+// 			},
+// 		},
+// 		"birth_place": &graphql.Field{
+// 			Type: graphql.String,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Birthplace, nil
+// 			},
+// 		},
+// 		"birth_day": &graphql.Field{
+// 			Type: graphql.String,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Birthday, nil
+// 			},
+// 		},
+// 		"blood_type": &graphql.Field{
+// 			Type: graphql.String,
+// 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+// 				idol := p.Source.(Idol)
+// 				return idol.Bloodtype, nil
+// 			},
+// 		},
+// 	},
+// })
 
-func getSameAgeIdols(db *sql.DB, o Option) []Idol {
-	var stx string
-	if o.age == 0 {
-		stx = "select * from idol order by id"
-	} else {
-		stx = fmt.Sprintf("select * from idol where age=%d order by id", o.age)
-	}
-	rows, err := db.Query(stx)
-	if err != nil {
-		log.Fatal(err)
-	}
+// func getSameAgeIdols(db *sql.DB, o Option) []Idol {
+// 	var stx string
+// 	if o.age == 0 {
+// 		stx = "select * from idol order by id"
+// 	} else {
+// 		stx = fmt.Sprintf("select * from idol where age=%d order by id", o.age)
+// 	}
+// 	rows, err := db.Query(stx)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	var result []Idol
-	for rows.Next() {
-		var i Idol
-		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype, &i.Unit)
+// 	var result []Idol
+// 	for rows.Next() {
+// 		var i Idol
+// 		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype, &i.Unit)
 
-		if o.age == 0 || i.Age == o.age {
-			result = append(result, i)
-		}
+// 		if o.age == 0 || i.Age == o.age {
+// 			result = append(result, i)
+// 		}
 
-	}
+// 	}
 
-	return result
-}
+// 	return result
+// }
 
 func readQuery(filepath string) (string, error) {
 	b, err := ioutil.ReadFile(filepath)
@@ -153,14 +154,14 @@ func main() {
 			Name: "Query",
 			Fields: graphql.Fields{
 				"idols": &graphql.Field{
-					Type: graphql.NewList(IdolType),
+					Type: graphql.NewList(models.IdolType),
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 						ageQuery, ok := p.Args["age"].(int)
 						if ok {
-							result := getSameAgeIdols(db, Option{age: ageQuery})
+							result := models.GetSameAgeIdols(db, models.IdolByAgeOption{Age: ageQuery})
 							return result, nil
 						} else {
-							result := getSameAgeIdols(db, Option{})
+							result := models.GetSameAgeIdols(db, models.IdolByAgeOption{})
 							return result, nil
 						}
 					},
