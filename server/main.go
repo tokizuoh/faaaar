@@ -7,6 +7,7 @@ import (
 	"github/tokizuoh/faaaar/server/models"
 	"io/ioutil"
 	"log"
+	"net/http"
 
 	"github.com/graphql-go/graphql"
 	_ "github.com/lib/pq"
@@ -37,6 +38,22 @@ func readQuery(filepath string) (string, error) {
 const QUERY_FILE_PATH = "./query.txt"
 
 func main() {
+	http.HandleFunc("/graphql", func(rw http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		hoge := string(body)
+		log.Println(hoge)
+	})
+	http.ListenAndServe(":8080", nil)
+	return
+
+	// TODO: [#30] 以下メソッドに切り出す
+
 	dsn := datasourceName{
 		host:     "faaaar-db",
 		port:     5432,
