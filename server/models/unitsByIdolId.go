@@ -53,13 +53,17 @@ func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
 		return nil, err
 	}
 
+	var where string
 	if o.IdolId != 0 {
-		// TODO: [#27] 「SQLファイル読み込み + WHERE句追加」処理を共通化する
-		stx += fmt.Sprintf(" WHERE idl.id=%d", o.IdolId)
-		log.Println(stx)
+		where = fmt.Sprintf("idl.id=%d", o.IdolId)
 	}
 
-	rows, err := db.Query(stx)
+	cfg := Sqlcfg{
+		base:  stx,
+		where: where,
+	}
+
+	rows, err := db.Query(cfg.Make())
 	if err != nil {
 		log.Fatal(err)
 	}
