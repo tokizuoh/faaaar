@@ -81,12 +81,17 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 	stx, err := readSQLFile("./sqls/get_idols_by_age.sql")
 
+	var where string
 	if o.Age != 0 {
-		// TODO: [#27] 「SQLファイル読み込み + WHERE句追加」処理を共通化する
-		stx += fmt.Sprintf(" WHERE age=%d", o.Age)
+		where = fmt.Sprintf("age=%d", o.Age)
 	}
 
-	rows, err := db.Query(stx)
+	cfg := Sqlcfg{
+		base:  stx,
+		where: where,
+	}
+
+	rows, err := db.Query(cfg.Query())
 	if err != nil {
 		log.Fatal(err)
 	}
