@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -52,13 +53,9 @@ func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
 		return nil, err
 	}
 
-	if o.IdolId == 0 {
-		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
-		// stx = "SELECT idl.id          AS id, idl.name        AS name, idl.age         AS age, idl.height      AS height, idl.birth_place AS birth_place, idl.blood_type  AS blood_type, unt.name        AS unit FROM idol idl INNER JOIN idol_unit idlunt ON idl.id = idlunt.idol INNER JOIN unit unt ON idlunt.unit = unt.id"
-	} else {
-		// TODO: [#25] SQL文のリテラルをSQLファイル読み込みに変更する
-		// whereでidの指定する
-		// stx = fmt.Sprintf("SELECT idl.id          AS id, unt.name        AS unit FROM idol idl INNER JOIN idol_unit idlunt ON idl.id = idlunt.idol INNER JOIN unit unt ON idlunt.unit = unt.id WHERE idl.id=%d", o.IdolId)
+	if o.IdolId != 0 {
+		stx += fmt.Sprintf(" WHERE idl.id=%d", o.IdolId)
+		log.Println(stx)
 	}
 
 	rows, err := db.Query(stx)

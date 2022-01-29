@@ -10,4 +10,4 @@ ON
 INNER JOIN
     unit unt
 ON
-    idlunt.unit = unt.id;
+    idlunt.unit = unt.id
