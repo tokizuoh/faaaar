@@ -63,10 +63,10 @@ func main() {
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 						ageQuery, ok := p.Args["age"].(int)
 						if ok {
-							result := models.GetSameAgeIdols(db, models.IdolByAgeOption{Age: ageQuery})
+							result := models.GetSameAgeIdols(db, models.IdolsByAgeOption{Age: ageQuery})
 							return result, nil
 						} else {
-							result := models.GetSameAgeIdols(db, models.IdolByAgeOption{})
+							result := models.GetSameAgeIdols(db, models.IdolsByAgeOption{})
 							return result, nil
 						}
 					},

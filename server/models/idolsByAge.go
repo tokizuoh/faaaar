@@ -19,7 +19,7 @@ type Idol struct {
 	Unit       string
 }
 
-type IdolByAgeOption struct {
+type IdolsByAgeOption struct {
 	Age int
 }
 
@@ -78,7 +78,7 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-func GetSameAgeIdols(db *sql.DB, o IdolByAgeOption) []Idol {
+func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 	var stx string
 	if o.Age == 0 {
 		stx = "select * from idol order by id"
