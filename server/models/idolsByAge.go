@@ -94,10 +94,7 @@ func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 	for rows.Next() {
 		var i Idol
 		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype)
-		if o.Age == 0 || i.Age == o.Age {
-			result = append(result, i)
-		}
-
+		result = append(result, i)
 	}
 
 	return result
