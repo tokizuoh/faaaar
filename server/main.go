@@ -81,10 +81,16 @@ func main() {
 					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 						idolIdQuery, ok := p.Args["idolId"].(int)
 						if ok {
-							result := models.GetUnitsByIdolID(db, models.UnitsByIdolIdOption{IdolId: idolIdQuery})
+							result, err := models.GetUnitsByIdolID(db, models.UnitsByIdolIdOption{IdolId: idolIdQuery})
+							if err != nil {
+								return nil, err
+							}
 							return result, nil
 						} else {
-							result := models.GetUnitsByIdolID(db, models.UnitsByIdolIdOption{})
+							result, err := models.GetUnitsByIdolID(db, models.UnitsByIdolIdOption{})
+							if err != nil {
+								return nil, err
+							}
 							return result, nil
 						}
 					},
