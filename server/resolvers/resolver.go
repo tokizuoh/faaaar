@@ -11,18 +11,6 @@ import (
 
 var db *sql.DB
 
-type sqlcfg struct {
-	base  string
-	where string
-}
-
-func (s sqlcfg) Query() string {
-	if s.where == "" {
-		return s.base
-	}
-	return s.base + " " + "WHERE" + " " + s.where
-}
-
 func init() {
 	dsn := datasourceName{
 		host:     "faaaar-db",
