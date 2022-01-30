@@ -15,7 +15,6 @@ var UnitsField = &graphql.Field{
 		var o models.UnitsByIdolIdOption
 		if ok {
 			o = models.UnitsByIdolIdOption{IdolId: idolId}
-
 		}
 
 		result, err := models.GetUnitsByIdolID(o)
