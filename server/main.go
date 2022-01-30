@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/graphql-go/graphql"
-	_ "github.com/lib/pq"
 )
 
 func readQuery(filepath string) (string, error) {

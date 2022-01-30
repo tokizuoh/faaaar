@@ -6,9 +6,9 @@ import (
 	"github/tokizuoh/faaaar/server/models"
 	"io/ioutil"
 	"log"
-)
 
-type Resolver struct{}
+	_ "github.com/lib/pq"
+)
 
 type datasourceName struct {
 	host     string
@@ -49,7 +49,6 @@ func init() {
 
 	dsnString := dsn.String()
 	_db, err := sql.Open("postgres", dsnString)
-	defer db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
