@@ -12,7 +12,6 @@ var IdolsFieldKey = "idols"
 var IdolsField = &graphql.Field{
 	Type: graphql.NewList(types.IdolType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO: [#30] 値が入っていない時は ageがゼロ値になっていることを確認
 		age, _ := p.Args["age"].(int)
 		result, err := resolvers.GetIdolsByAge(age)
 		if err != nil {

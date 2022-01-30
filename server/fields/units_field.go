@@ -12,7 +12,6 @@ var UnitsFieldKey = "units"
 var UnitsField = &graphql.Field{
 	Type: graphql.NewList(types.UnitType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO: [#30] 値が入っていない時は idolIdがゼロ値になっていることを確認
 		idolId, _ := p.Args["idolId"].(int)
 		result, err := resolvers.GetUnitsByIdolID(idolId)
 		if err != nil {
