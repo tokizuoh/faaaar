@@ -66,7 +66,7 @@ func readSQLFile(filepath string) (string, error) {
 	return string(b), nil
 }
 
-func (r Resolver) getIdolsByAge(age int) ([]models.Idol, error) {
+func GetIdolsByAge(age int) ([]models.Idol, error) {
 	idols, err := models.IdolsByAge(db, age)
 	if err != nil {
 		return nil, err
