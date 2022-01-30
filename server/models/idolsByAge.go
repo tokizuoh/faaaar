@@ -18,10 +18,6 @@ type Idol struct {
 	Unit       string
 }
 
-type IdolsByAgeOption struct {
-	Age int
-}
-
 var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Idol",
 	Fields: graphql.Fields{
@@ -77,44 +73,12 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-type datasourceName struct {
-	host     string
-	port     int
-	user     string
-	password string
-	dbname   string
-	sslmode  string
-}
-
-func getDataSourceNameString(dsn datasourceName) string {
-	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
-}
-
-func GetSameAgeIdols(o IdolsByAgeOption) ([]Idol, error) {
-	// TODO: [#30] DB処理共通化 start
-	dsn := datasourceName{
-		host:     "faaaar-db",
-		port:     5432,
-		user:     "postgres",
-		password: "postgres",
-		dbname:   "postgres",
-		sslmode:  "disable",
-	}
-
-	dsnString := getDataSourceNameString(dsn)
-	db, err := sql.Open("postgres", dsnString)
-	defer db.Close()
-
-	if err != nil {
-		return nil, err
-	}
-	// TODO: [#30] DB処理共通化 end
-
+func IdolsByAge(db *sql.DB, age int) ([]Idol, error) {
 	stx, err := readSQLFile("./sqls/get_idols_by_age.sql")
 
 	var where string
-	if o.Age != 0 {
-		where = fmt.Sprintf("age=%d", o.Age)
+	if age != 0 {
+		where = fmt.Sprintf("age=%d", age)
 	}
 
 	cfg := Sqlcfg{

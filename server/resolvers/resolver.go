@@ -3,6 +3,8 @@ package resolver
 import (
 	"database/sql"
 	"fmt"
+	"github/tokizuoh/faaaar/server/models"
+	"io/ioutil"
 	"log"
 )
 
@@ -23,6 +25,18 @@ func (dsn datasourceName) String() string {
 
 var db *sql.DB
 
+type sqlcfg struct {
+	base  string
+	where string
+}
+
+func (s sqlcfg) Query() string {
+	if s.where == "" {
+		return s.base
+	}
+	return s.base + " " + "WHERE" + " " + s.where
+}
+
 func init() {
 	dsn := datasourceName{
 		host:     "faaaar-db",
@@ -41,4 +55,22 @@ func init() {
 	}
 
 	db = _db
+}
+
+func readSQLFile(filepath string) (string, error) {
+	b, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func (r Resolver) getIdolsByAge(age int) ([]models.Idol, error) {
+	idols, err := models.IdolsByAge(db, age)
+	if err != nil {
+		return nil, err
+	}
+
+	return idols, nil
 }
