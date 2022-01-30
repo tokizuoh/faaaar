@@ -2,26 +2,12 @@ package resolvers
 
 import (
 	"database/sql"
-	"fmt"
 	"github/tokizuoh/faaaar/server/models"
 	"io/ioutil"
 	"log"
 
 	_ "github.com/lib/pq"
 )
-
-type datasourceName struct {
-	host     string
-	port     int
-	user     string
-	password string
-	dbname   string
-	sslmode  string
-}
-
-func (dsn datasourceName) String() string {
-	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
-}
 
 var db *sql.DB
 
@@ -47,7 +33,7 @@ func init() {
 		sslmode:  "disable",
 	}
 
-	dsnString := dsn.String()
+	dsnString := dsn.string()
 	_db, err := sql.Open("postgres", dsnString)
 	if err != nil {
 		log.Fatal(err)
