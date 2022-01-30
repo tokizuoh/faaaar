@@ -27,8 +27,8 @@ func executeQuery(query string) {
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Query",
 			Fields: graphql.Fields{
-				"idols": fields.IdolsField,
-				"units": fields.UnitsField,
+				fields.IdolsFieldKey: fields.IdolsField,
+				fields.UnitsFieldKey: fields.UnitsField,
 			},
 		}),
 	})

@@ -6,6 +6,8 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+var IdolsFieldKey = "idols"
+
 var IdolsField = &graphql.Field{
 	Type: graphql.NewList(models.IdolType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {

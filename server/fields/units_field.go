@@ -6,6 +6,8 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+var UnitsFieldKey = "units"
+
 var UnitsField = &graphql.Field{
 	Type: graphql.NewList(models.UnitType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
