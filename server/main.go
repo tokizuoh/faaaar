@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github/tokizuoh/faaaar/server/fields"
 	"io/ioutil"
 	"log"
@@ -22,7 +23,7 @@ func readQuery(filepath string) (string, error) {
 
 const QUERY_FILE_PATH = "./query.txt"
 
-func executeQuery(query string) {
+func executeQuery(query string) string {
 	scheme, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Query",
@@ -48,7 +49,11 @@ func executeQuery(query string) {
 	}
 
 	output, err := json.MarshalIndent(r, "", "\t")
-	log.Printf("%s \n", output)
+	if err != nil {
+		log.Fatal(r.Errors)
+	}
+
+	return string(output)
 }
 
 func main() {
@@ -61,7 +66,8 @@ func main() {
 		}
 
 		query := string(body)
-		executeQuery(query)
+		result := executeQuery(query)
+		fmt.Fprint(rw, result)
 	})
 	http.ListenAndServe(":8080", nil)
 }
