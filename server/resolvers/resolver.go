@@ -17,7 +17,7 @@ type datasourceName struct {
 	sslmode  string
 }
 
-func getDataSourceNameString(dsn datasourceName) string {
+func (dsn datasourceName) String() string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
 }
 
@@ -33,7 +33,7 @@ func init() {
 		sslmode:  "disable",
 	}
 
-	dsnString := getDataSourceNameString(dsn)
+	dsnString := dsn.String()
 	_db, err := sql.Open("postgres", dsnString)
 	defer db.Close()
 	if err != nil {
