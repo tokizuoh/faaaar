@@ -6,7 +6,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-var IdolsFields = &graphql.Field{
+var IdolsField = &graphql.Field{
 	Type: graphql.NewList(models.IdolType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		ageQuery, ok := p.Args["age"].(int)

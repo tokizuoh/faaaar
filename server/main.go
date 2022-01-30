@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"github/tokizuoh/faaaar/server/fields"
-	"github/tokizuoh/faaaar/server/models"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -28,31 +27,8 @@ func executeQuery(query string) {
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Query",
 			Fields: graphql.Fields{
-				"idols": fields.IdolsFields,
-				"units": &graphql.Field{
-					Type: graphql.NewList(models.UnitType),
-					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-						idolIdQuery, ok := p.Args["idolId"].(int)
-						if ok {
-							result, err := models.GetUnitsByIdolID(models.UnitsByIdolIdOption{IdolId: idolIdQuery})
-							if err != nil {
-								return nil, err
-							}
-							return result, nil
-						} else {
-							result, err := models.GetUnitsByIdolID(models.UnitsByIdolIdOption{})
-							if err != nil {
-								return nil, err
-							}
-							return result, nil
-						}
-					},
-					Args: graphql.FieldConfigArgument{
-						"idolId": &graphql.ArgumentConfig{
-							Type: graphql.Int,
-						},
-					},
-				},
+				"idols": fields.IdolsField,
+				"units": fields.UnitsField,
 			},
 		}),
 	})
