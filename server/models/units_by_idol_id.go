@@ -47,34 +47,15 @@ func readSQLFile(filepath string) (string, error) {
 	return string(b), nil
 }
 
-func GetUnitsByIdolID(o UnitsByIdolIdOption) ([]Unit, error) {
-	// TODO: [#30] DB処理共通化 start
-	dsn := datasourceName{
-		host:     "faaaar-db",
-		port:     5432,
-		user:     "postgres",
-		password: "postgres",
-		dbname:   "postgres",
-		sslmode:  "disable",
-	}
-
-	dsnString := getDataSourceNameString(dsn)
-	db, err := sql.Open("postgres", dsnString)
-	defer db.Close()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-	// TODO: [#30] DB処理共通化 end
-
+func UnitsByIdolID(db *sql.DB, idolId int) ([]Unit, error) {
 	stx, err := readSQLFile("./sqls/get_units_by_idol_id.sql")
 	if err != nil {
 		return nil, err
 	}
 
 	var where string
-	if o.IdolId != 0 {
-		where = fmt.Sprintf("idl.id=%d", o.IdolId)
+	if idolId != 0 {
+		where = fmt.Sprintf("idl.id=%d", idolId)
 	}
 
 	cfg := Sqlcfg{
