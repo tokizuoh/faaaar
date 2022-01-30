@@ -1,73 +1,75 @@
 # faaaar
 Learn GraphQL with THE IDOLM@STER SHINY COLORS.
 
-## Getting Started
-  
-Write the following Query in `server/query.txt`.
-  
-### Query
+## Development Environment
 
 ```bash
-query := `
-	{
-		idols {
-			id
-			name
-			age
-			height
-			birth_place
-			birth_day
-			blood_type
-		}
-	}
-`
+$ docker --version
+Docker version 20.10.8, build 3967b7d
+
+$ docker-compose --version
+docker-compose version 1.29.2, build 5becea4c
 ```
 
-### Build & Run
+## Setup
 
 ```bash
 $ make build
-...
-Starting postgres-syani  ... done
-Recreating faaaar-server ... done
-
 $ make run
-docker-compose exec server go mod download
-docker-compose exec server go run main.go
-2022/01/23 06:08:34 {
-        "data": {
-                "idols": [
-                        {
-                                "age": 16,
-                                "birth_day": "4/25",
-                                "birth_place": "東京都",
-                                "blood_type": "A",
-                                "height": 155,
-                                "id": 1,
-                                "name": "櫻木 真乃"
-                        },
-                        {
-                                "age": 16,
-                                "birth_day": "7/22",
-                                "birth_place": "アメリカ マサチューセッツ州",
-                                "blood_type": "O",
-                                "height": 157,
-                                "id": 2,
-                                "name": "八宮 めぐる"
-                        },
-                        ...
-                        {
-                                "age": 20,
-                                "birth_day": "1/31",
-                                "birth_place": "神奈川県",
-                                "blood_type": "A",
-                                "height": 161,
-                                "id": 26,
-                                "name": "斑鳩 ルカ"
-                        }
-                ]
-        }
-} 
+```
+
+## Usage
+
+### Get idolList (by age)
+
+```bash
+$ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
+
+# 2022/01/29 15:31:55 {
+#         "data": {
+#                 "idols": [
+#                         {
+#                                 "age": 20,
+#                                 "birth_day": "8/16",
+#                                 "birth_place": "愛知県",
+#                                 "blood_type": "B",
+#                                 "height": 168,
+#                                 "id": 16,
+#                                 "name": "有栖川 夏葉"
+#                         },
+#                         {
+#                                 "age": 20,
+#                                 "birth_day": "1/31",
+#                                 "birth_place": "神奈川県",
+#                                 "blood_type": "A",
+#                                 "height": 161,
+#                                 "id": 26,
+#                                 "name": "斑鳩 ルカ"
+#                         }
+#                 ]
+#         }
+# } 
+```
+
+### Get unitList (by idolId)
+
+```bash
+$ curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
+
+# 2022/01/29 15:33:12 {
+#         "data": {
+#                 "units": [
+#                         {
+#                                 "id": "2",
+#                                 "name": "イルミネーションスターズ"
+#                         },
+#                         {
+#                                 "id": "2",
+#                                 "name": "Luna"
+#                         }
+#                 ]
+#         }
+# } 
 ```
   
 ## Development
@@ -79,6 +81,6 @@ docker-compose exec server go run main.go
 2. Grant permission to shell-script.  
   
 ```bash
-chmod +x .git/hooks/commit-msg
+$ chmod +x .git/hooks/commit-msg
 ```
    

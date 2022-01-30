@@ -1,4 +1,4 @@
-package models
+package types
 
 import (
 	"database/sql"
@@ -12,10 +12,6 @@ import (
 type Unit struct {
 	Id   string
 	Name string
-}
-
-type UnitsByIdolIdOption struct {
-	IdolId int
 }
 
 var UnitType = graphql.NewObject(graphql.ObjectConfig{
@@ -47,15 +43,15 @@ func readSQLFile(filepath string) (string, error) {
 	return string(b), nil
 }
 
-func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
+func UnitsByIdolID(db *sql.DB, idolId int) ([]Unit, error) {
 	stx, err := readSQLFile("./sqls/get_units_by_idol_id.sql")
 	if err != nil {
 		return nil, err
 	}
 
 	var where string
-	if o.IdolId != 0 {
-		where = fmt.Sprintf("idl.id=%d", o.IdolId)
+	if idolId != 0 {
+		where = fmt.Sprintf("idl.id=%d", idolId)
 	}
 
 	cfg := Sqlcfg{

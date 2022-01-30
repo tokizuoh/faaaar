@@ -1,9 +1,8 @@
-package models
+package types
 
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/graphql-go/graphql"
 )
@@ -17,10 +16,6 @@ type Idol struct {
 	Birthday   string
 	Bloodtype  string
 	Unit       string
-}
-
-type IdolsByAgeOption struct {
-	Age int
 }
 
 var IdolType = graphql.NewObject(graphql.ObjectConfig{
@@ -78,12 +73,12 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
+func IdolsByAge(db *sql.DB, age int) ([]Idol, error) {
 	stx, err := readSQLFile("./sqls/get_idols_by_age.sql")
 
 	var where string
-	if o.Age != 0 {
-		where = fmt.Sprintf("age=%d", o.Age)
+	if age != 0 {
+		where = fmt.Sprintf("age=%d", age)
 	}
 
 	cfg := Sqlcfg{
@@ -93,7 +88,7 @@ func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 
 	rows, err := db.Query(cfg.Query())
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	var result []Idol
@@ -103,5 +98,5 @@ func GetSameAgeIdols(db *sql.DB, o IdolsByAgeOption) []Idol {
 		result = append(result, i)
 	}
 
-	return result
+	return result, nil
 }
