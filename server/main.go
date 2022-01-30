@@ -51,7 +51,7 @@ func main() {
 
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			// TODO: [#30] エラーどう渡す？
+			fmt.Fprintf(rw, err.Error())
 			log.Fatal(err)
 		}
 
