@@ -11,17 +11,6 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func readQuery(filepath string) (string, error) {
-	b, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
-}
-
-const QUERY_FILE_PATH = "./query.txt"
-
 func executeQuery(query string) (string, error) {
 	scheme, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
