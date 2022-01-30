@@ -23,7 +23,7 @@ func readQuery(filepath string) (string, error) {
 
 const QUERY_FILE_PATH = "./query.txt"
 
-func executeQuery(query string) string {
+func executeQuery(query string) (string, error) {
 	scheme, err := graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Query",
@@ -35,7 +35,7 @@ func executeQuery(query string) string {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
 	params := graphql.Params{
@@ -45,15 +45,16 @@ func executeQuery(query string) string {
 
 	r := graphql.Do(params)
 	if r.HasErrors() {
+		// TODO: [#30] エラーどう渡す？
 		log.Fatal(r.Errors)
 	}
 
 	output, err := json.MarshalIndent(r, "", "\t")
 	if err != nil {
-		log.Fatal(r.Errors)
+		return "", err
 	}
 
-	return string(output)
+	return string(output), nil
 }
 
 func main() {
@@ -66,8 +67,13 @@ func main() {
 		}
 
 		query := string(body)
-		result := executeQuery(query)
-		fmt.Fprint(rw, result)
+		result, err := executeQuery(query)
+		if err != nil {
+			fmt.Fprint(rw, err)
+		} else {
+			fmt.Fprint(rw, result)
+		}
+
 	})
 	http.ListenAndServe(":8080", nil)
 }
