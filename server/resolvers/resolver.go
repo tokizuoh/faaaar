@@ -3,7 +3,6 @@ package resolvers
 import (
 	"database/sql"
 	"github/tokizuoh/faaaar/server/models"
-	"io/ioutil"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -28,15 +27,6 @@ func init() {
 	}
 
 	db = _db
-}
-
-func readSQLFile(filepath string) (string, error) {
-	b, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		return "", err
-	}
-
-	return string(b), nil
 }
 
 func GetIdolsByAge(age int) ([]models.Idol, error) {
