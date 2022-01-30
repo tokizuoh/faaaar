@@ -33,8 +33,8 @@ func executeQuery(query string) (string, error) {
 
 	r := graphql.Do(params)
 	if r.HasErrors() {
-		// TODO: [#xxx] なぜエラーがリスト？単体でない理由は？
-		log.Fatal(r.Errors)
+		// TODO: [#33] 添字アクセスをやめる
+		return "", r.Errors[0]
 	}
 
 	output, err := json.MarshalIndent(r, "", "\t")
