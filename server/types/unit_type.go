@@ -1,4 +1,4 @@
-package models
+package types
 
 import (
 	"database/sql"
@@ -12,10 +12,6 @@ import (
 type Unit struct {
 	Id   string
 	Name string
-}
-
-type UnitsByIdolIdOption struct {
-	IdolId int
 }
 
 var UnitType = graphql.NewObject(graphql.ObjectConfig{

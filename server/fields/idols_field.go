@@ -1,8 +1,8 @@
 package fields
 
 import (
-	"github/tokizuoh/faaaar/server/models"
 	"github/tokizuoh/faaaar/server/resolvers"
+	"github/tokizuoh/faaaar/server/types"
 
 	"github.com/graphql-go/graphql"
 )
@@ -10,7 +10,7 @@ import (
 var IdolsFieldKey = "idols"
 
 var IdolsField = &graphql.Field{
-	Type: graphql.NewList(models.IdolType),
+	Type: graphql.NewList(types.IdolType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		// TODO: [#30] 値が入っていない時は ageがゼロ値になっていることを確認
 		age, _ := p.Args["age"].(int)

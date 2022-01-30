@@ -2,7 +2,7 @@ package resolvers
 
 import (
 	"database/sql"
-	"github/tokizuoh/faaaar/server/models"
+	"github/tokizuoh/faaaar/server/types"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -29,8 +29,8 @@ func init() {
 	db = _db
 }
 
-func GetIdolsByAge(age int) ([]models.Idol, error) {
-	idols, err := models.IdolsByAge(db, age)
+func GetIdolsByAge(age int) ([]types.Idol, error) {
+	idols, err := types.IdolsByAge(db, age)
 	if err != nil {
 		return nil, err
 	}
@@ -38,8 +38,8 @@ func GetIdolsByAge(age int) ([]models.Idol, error) {
 	return idols, nil
 }
 
-func GetUnitsByIdolID(idolId int) ([]models.Unit, error) {
-	units, err := models.UnitsByIdolID(db, idolId)
+func GetUnitsByIdolID(idolId int) ([]types.Unit, error) {
+	units, err := types.UnitsByIdolID(db, idolId)
 	if err != nil {
 		return nil, err
 	}

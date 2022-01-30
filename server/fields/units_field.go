@@ -1,8 +1,8 @@
 package fields
 
 import (
-	"github/tokizuoh/faaaar/server/models"
 	"github/tokizuoh/faaaar/server/resolvers"
+	"github/tokizuoh/faaaar/server/types"
 
 	"github.com/graphql-go/graphql"
 )
@@ -10,7 +10,7 @@ import (
 var UnitsFieldKey = "units"
 
 var UnitsField = &graphql.Field{
-	Type: graphql.NewList(models.UnitType),
+	Type: graphql.NewList(types.UnitType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		// TODO: [#30] 値が入っていない時は idolIdがゼロ値になっていることを確認
 		idolId, _ := p.Args["idolId"].(int)
