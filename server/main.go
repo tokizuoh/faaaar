@@ -33,7 +33,7 @@ func executeQuery(query string) (string, error) {
 
 	r := graphql.Do(params)
 	if r.HasErrors() {
-		// TODO: [#30] エラーどう渡す？
+		// TODO: [#xxx] なぜエラーがリスト？単体でない理由は？
 		log.Fatal(r.Errors)
 	}
 
