@@ -17,7 +17,10 @@ var IdolsField = &graphql.Field{
 			o = models.IdolsByAgeOption{Age: age}
 		}
 
-		result := models.GetSameAgeIdols(o)
+		result, err := models.GetSameAgeIdols(o)
+		if err != nil {
+			return nil, err
+		}
 		return result, nil
 	},
 	Args: graphql.FieldConfigArgument{

@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/graphql-go/graphql"
 )
@@ -91,7 +90,7 @@ func getDataSourceNameString(dsn datasourceName) string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=%s", dsn.host, dsn.port, dsn.user, dsn.password, dsn.dbname, dsn.sslmode)
 }
 
-func GetSameAgeIdols(o IdolsByAgeOption) []Idol {
+func GetSameAgeIdols(o IdolsByAgeOption) ([]Idol, error) {
 	// TODO: [#30] DB処理共通化 start
 	dsn := datasourceName{
 		host:     "faaaar-db",
@@ -107,7 +106,7 @@ func GetSameAgeIdols(o IdolsByAgeOption) []Idol {
 	defer db.Close()
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	// TODO: [#30] DB処理共通化 end
 
@@ -125,7 +124,7 @@ func GetSameAgeIdols(o IdolsByAgeOption) []Idol {
 
 	rows, err := db.Query(cfg.Query())
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	var result []Idol
@@ -135,5 +134,5 @@ func GetSameAgeIdols(o IdolsByAgeOption) []Idol {
 		result = append(result, i)
 	}
 
-	return result
+	return result, nil
 }
