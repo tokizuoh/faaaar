@@ -47,7 +47,26 @@ func readSQLFile(filepath string) (string, error) {
 	return string(b), nil
 }
 
-func GetUnitsByIdolID(db *sql.DB, o UnitsByIdolIdOption) ([]Unit, error) {
+func GetUnitsByIdolID(o UnitsByIdolIdOption) ([]Unit, error) {
+	// TODO: [#30] DB処理共通化 start
+	dsn := datasourceName{
+		host:     "faaaar-db",
+		port:     5432,
+		user:     "postgres",
+		password: "postgres",
+		dbname:   "postgres",
+		sslmode:  "disable",
+	}
+
+	dsnString := getDataSourceNameString(dsn)
+	db, err := sql.Open("postgres", dsnString)
+	defer db.Close()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	// TODO: [#30] DB処理共通化 end
+
 	stx, err := readSQLFile("./sqls/get_units_by_idol_id.sql")
 	if err != nil {
 		return nil, err
