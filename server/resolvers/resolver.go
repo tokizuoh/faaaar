@@ -1,4 +1,4 @@
-package resolver
+package resolvers
 
 import (
 	"database/sql"
@@ -73,4 +73,13 @@ func (r Resolver) getIdolsByAge(age int) ([]models.Idol, error) {
 	}
 
 	return idols, nil
+}
+
+func GetUnitsByIdolID(idolId int) ([]models.Unit, error) {
+	units, err := models.UnitsByIdolID(db, idolId)
+	if err != nil {
+		return nil, err
+	}
+
+	return units, nil
 }
