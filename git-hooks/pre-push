@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# TODO: [#36] 下記の実行結果それぞれに対してファイル走査する
+find . -type d -name .git -prune -o -type f -print
