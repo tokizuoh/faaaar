@@ -74,7 +74,12 @@
       const terminal = new Terminal();
       terminal.open(document.getElementById("terminal-container"));
       terminal.write("Welcome\x1B[1;36m faaar Playground\x1B[m!")
-
+  </script>
+  <script>
+    const runButton = document.getElementById("run-button");
+    runButton.addEventListener("click", () => {
+      // TODO: [#23] Runボタン押下処理を追加する
+    });
   </script>
   </body>
 
