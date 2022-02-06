@@ -5,9 +5,12 @@ build-db:
 stop:
 	docker stop faaaar-server
 	docker stop faaaar-db
-run:
+run-srv:
 	docker-compose exec server go mod download
 	docker-compose exec server go run main.go
+run-frt:
+	docker-compose exec front go mod download
+	docker-compose exec front go run main.go
 srv-e:
 	docker exec -it faaaar-server sh
 db-e:
