@@ -73,12 +73,37 @@
   <script>
       const terminal = new Terminal();
       terminal.open(document.getElementById("terminal-container"));
-      terminal.write("Welcome\x1B[1;36m faaar Playground\x1B[m!")
+      terminal.writeln("-----------------------------")
+      terminal.writeln("| Welcome\x1B[1;36m faaaar Playground\x1B[m! |")
+      terminal.writeln("-----------------------------")
+      terminal.writeln("")
   </script>
   <script>
     const runButton = document.getElementById("run-button");
     runButton.addEventListener("click", () => {
-      // TODO: [#23] Runボタン押下処理を追加する
+      runButton.disabled = true;
+  
+      fetch("http://localhost:8080/graphql", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: editor.getValue(),
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        // TODO: [#23] data.unitsを全て表示する
+        terminal.writeln(`${response.data.units[0].name}`);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        runButton.disabled = false;
+      });
     });
   </script>
   </body>
