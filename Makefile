@@ -1,5 +1,10 @@
 build:
 	docker-compose up --build -d
+rbuild:
+	docker stop faaaar-front
+	docker stop faaaar-server
+	docker stop faaaar-db
+	docker-compose up --build -d
 build-db:
 	docker-compose up -d --build db
 stop:
