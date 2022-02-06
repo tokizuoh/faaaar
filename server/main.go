@@ -37,7 +37,7 @@ func executeQuery(query string) (string, error) {
 		return "", r.Errors[0]
 	}
 
-	output, err := json.MarshalIndent(r, "", "\t")
+	output, err := json.Marshal(r)
 	if err != nil {
 		return "", err
 	}
@@ -48,6 +48,9 @@ func executeQuery(query string) (string, error) {
 func main() {
 	http.HandleFunc("/graphql", func(rw http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
+		rw.Header().Set("Access-Control-Allow-Headers", "*")
+		rw.Header().Set("Access-Control-Allow-Origin", "*")
+		rw.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
