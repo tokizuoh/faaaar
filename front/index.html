@@ -83,7 +83,7 @@
         document.getElementById("result").innerText = JSON.stringify(response, null, 2);
       })
       .catch((error) => {
-        console.error(error);
+        document.getElementById("result").innerText = error;
       })
       .finally(() => {
         runButton.disabled = false;
