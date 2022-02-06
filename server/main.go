@@ -37,7 +37,7 @@ func executeQuery(query string) (string, error) {
 		return "", r.Errors[0]
 	}
 
-	output, err := json.MarshalIndent(r, "", "\t")
+	output, err := json.Marshal(r)
 	if err != nil {
 		return "", err
 	}
