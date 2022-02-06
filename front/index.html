@@ -12,14 +12,6 @@
           crossorigin="anonymous"/>
 
     <title>Hello, world!</title>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/xterm@4.13.0/css/xterm.css" />
-    <style>
-      .terminal.xterm {
-        padding: calc(1rem * 0.25);
-        height: 100%;
-      }
-    </style>
       
   </head>
   <body>
@@ -34,10 +26,12 @@
   }
 }</div>
             </div>
-            <!-- Terminal -->
+            <!-- Result -->
             <div class="col-md-6">
-                <div id="terminal-container" class="h-100"></div>
-            </div>
+              <div id="result-container" class="h-100">
+                <pre id="result"></pre>
+              </div>
+          </div>
         </div>
         <div class="row p-1 bg-light text-center">
             <div class="col-md-12 m-2">
@@ -69,15 +63,6 @@
       const editor = ace.edit("editor-container");
       editor.setTheme("ace/theme/chrome");
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm@4.13.0/lib/xterm.min.js"></script>
-  <script>
-      const terminal = new Terminal();
-      terminal.open(document.getElementById("terminal-container"));
-      terminal.writeln("------------------------------")
-      terminal.writeln("| Welcome\x1B[1;36m faaaar Playground\x1B[m! |")
-      terminal.writeln("------------------------------")
-      terminal.writeln("")
-  </script>
   <script>
     const runButton = document.getElementById("run-button");
     runButton.addEventListener("click", () => {
@@ -95,8 +80,7 @@
         return response.json();
       })
       .then((response) => {
-        // TODO: [#23] data.unitsを全て表示する
-        terminal.writeln(`${response.data.units[0].name}`);
+        document.getElementById("result").innerText = JSON.stringify(response, null, 2);
       })
       .catch((error) => {
         console.error(error);
