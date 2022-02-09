@@ -2,6 +2,7 @@ create table idol
 (
     id integer not null,
     name varchar not null,
+    latin_alphabet varchar not null,
     age integer not null,
     height integer not null,
     birth_place varchar not null,
