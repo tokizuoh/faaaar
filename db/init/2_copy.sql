@@ -1,4 +1,4 @@
-copy idol(id,name,age,height,birth_place,birth_day,blood_type)
+copy idol(id,name,latin_alphabet,age,height,birth_place,birth_day,blood_type)
   from '/docker-entrypoint-initdb.d/idol_list.csv' with csv header;
 
 copy unit(id,name)
