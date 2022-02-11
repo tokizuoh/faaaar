@@ -8,14 +8,15 @@ import (
 )
 
 type Idol struct {
-	Id         string
-	Name       string
-	Age        int
-	Height     int
-	Birthplace string
-	Birthday   string
-	Bloodtype  string
-	Unit       string
+	Id            string
+	Name          string
+	LatinAlphabet string
+	Age           int
+	Height        int
+	Birthplace    string
+	Birthday      string
+	Bloodtype     string
+	Unit          string
 }
 
 var IdolType = graphql.NewObject(graphql.ObjectConfig{
@@ -33,6 +34,13 @@ var IdolType = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				idol := p.Source.(Idol)
 				return idol.Name, nil
+			},
+		},
+		"latin_alphabet": &graphql.Field{
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				idol := p.Source.(Idol)
+				return idol.LatinAlphabet, nil
 			},
 		},
 		"age": &graphql.Field{
@@ -94,7 +102,7 @@ func IdolsByAge(db *sql.DB, age int) ([]Idol, error) {
 	var result []Idol
 	for rows.Next() {
 		var i Idol
-		rows.Scan(&i.Id, &i.Name, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype)
+		rows.Scan(&i.Id, &i.Name, &i.LatinAlphabet, &i.Age, &i.Height, &i.Birthplace, &i.Birthday, &i.Bloodtype)
 		result = append(result, i)
 	}
 
