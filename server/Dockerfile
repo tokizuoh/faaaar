@@ -3,4 +3,5 @@ WORKDIR /go/src
 
 COPY ./ ./
 RUN apk add --no-cache gcc musl-dev
-# TODO: [#46]
+RUN go mod download
+CMD go run main.go

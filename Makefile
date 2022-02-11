@@ -8,6 +8,7 @@ rbuild:
 build-db:
 	docker-compose up -d --build db
 stop:
+	docker stop faaaar-front
 	docker stop faaaar-server
 	docker stop faaaar-db
 run-srv:
