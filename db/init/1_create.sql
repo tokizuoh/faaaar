@@ -1,8 +1,8 @@
 CREATE DATABASE shiny_colors_db;
-use shiny_colors_db;
+USE shiny_colors_db;
 
 /* from idol_list.csv */
-create table idol
+CREATE TABLE idol
 (
     id INT(2),
     name VARCHAR(30),
