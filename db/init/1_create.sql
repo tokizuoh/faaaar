@@ -1,16 +1,19 @@
+CREATE DATABASE shiny_colors_db;
+use shiny_colors_db;
+
+/* from idol_list.csv */
 create table idol
 (
-    id integer not null,
-    name varchar not null,
-    latin_alphabet varchar not null,
-    age integer not null,
-    height integer not null,
-    birth_place varchar not null,
-    birth_day varchar not null,
-    blood_type varchar not null,
+    id INT(2),
+    name VARCHAR(30),
+    latin_alphabet VARCHAR(30),
+    age INT(2),
+    height INT(3),
+    birth_place VARCHAR(30),
+    birth_day VARCHAR(5),
+    blood_type VARCHAR(2),
     PRIMARY KEY (id)
 );
-comment on table idol is 'idol_list.csv';
 
 create table unit
 (
