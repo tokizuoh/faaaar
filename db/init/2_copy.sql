@@ -6,7 +6,21 @@ INTO TABLE
   idol
 FIELDS
 TERMINATED BY ','
-IGNORE 1 ROWS;  /* 追加 */
+IGNORE 1 ROWS
+SET character_set_database=utf-8;
 
-copy idol_unit(id,idol, unit)
-  from '/docker-entrypoint-initdb.d/idol_unit.csv' with csv header;
+LOAD DATA INFILE
+  '/docker-entrypoint-initdb.d/unit_list.csv'
+INTO TABLE
+  unit
+FIELDS
+TERMINATED BY ','
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE
+  '/docker-entrypoint-initdb.d/idol_unit.csv'
+INTO TABLE
+  idol_unit
+FIELDS
+TERMINATED BY ','
+IGNORE 1 ROWS;
