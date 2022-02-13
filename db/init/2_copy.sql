@@ -6,8 +6,7 @@ INTO TABLE
   idol
 FIELDS
 TERMINATED BY ','
-IGNORE 1 ROWS
-SET character_set_database=utf-8;
+IGNORE 1 ROWS;
 
 LOAD DATA INFILE
   '/docker-entrypoint-initdb.d/unit_list.csv'
