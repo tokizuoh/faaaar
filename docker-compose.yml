@@ -26,9 +26,7 @@ services:
       dockerfile: Dockerfile
     container_name: faaaar-db
     environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+      - MYSQL_ROOT_PASSWORD=root
     ports:
       - 5432:5432
     user: root
