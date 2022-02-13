@@ -1,30 +1,30 @@
-create table idol
-(
-    id integer not null,
-    name varchar not null,
-    latin_alphabet varchar not null,
-    age integer not null,
-    height integer not null,
-    birth_place varchar not null,
-    birth_day varchar not null,
-    blood_type varchar not null,
-    PRIMARY KEY (id)
-);
-comment on table idol is 'idol_list.csv';
+CREATE DATABASE shiny_colors_db;
+USE shiny_colors_db;
 
-create table unit
+/* from idol_list.csv */
+CREATE TABLE idol
 (
-    id varchar not null,
-    name varchar not null,
-    PRIMARY KEY (id)
+    `id` INT(2) NOT NULL PRIMARY KEY,
+    `name` VARCHAR(30),
+    `latin_alphabet` VARCHAR(30),
+    `age` INT(2),
+    `height` INT(3),
+    `birth_place` VARCHAR(30),
+    `birth_day` VARCHAR(5),
+    `blood_type` VARCHAR(2)
 );
-comment on table idol is 'unit_list.csv';
 
-create table idol_unit
+/* from unit_list.csv */
+CREATE TABLE unit
 (
-    id integer not null,
-    idol integer not null,
-    unit varchar not null,
-    PRIMARY KEY (id)
+    `id` VARCHAR(10) NOT NULL PRIMARY KEY,
+    `name` VARCHAR(30)
 );
-comment on table idol is 'idol_unit.csv';
+
+/* from idol_unit.csv */
+CREATE TABLE idol_unit
+(
+    `id` INT(3) NOT NULL PRIMARY KEY,
+    `idol` VARCHAR(30),
+    `unit` VARCHAR(30)
+);

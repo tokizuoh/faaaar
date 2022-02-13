@@ -1,8 +1,25 @@
-copy idol(id,name,latin_alphabet,age,height,birth_place,birth_day,blood_type)
-  from '/docker-entrypoint-initdb.d/idol_list.csv' with csv header;
+USE shiny_colors_db;
 
-copy unit(id,name)
-  from '/docker-entrypoint-initdb.d/unit_list.csv' with csv header;
+LOAD DATA INFILE
+  '/docker-entrypoint-initdb.d/idol_list.csv'
+INTO TABLE
+  idol
+FIELDS
+TERMINATED BY ','
+IGNORE 1 ROWS;
 
-copy idol_unit(id,idol, unit)
-  from '/docker-entrypoint-initdb.d/idol_unit.csv' with csv header;
+LOAD DATA INFILE
+  '/docker-entrypoint-initdb.d/unit_list.csv'
+INTO TABLE
+  unit
+FIELDS
+TERMINATED BY ','
+IGNORE 1 ROWS;
+
+LOAD DATA INFILE
+  '/docker-entrypoint-initdb.d/idol_unit.csv'
+INTO TABLE
+  idol_unit
+FIELDS
+TERMINATED BY ','
+IGNORE 1 ROWS;
