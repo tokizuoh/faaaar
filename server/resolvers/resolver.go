@@ -12,12 +12,10 @@ var db *sql.DB
 
 func init() {
 	dsn := datasourceName{
-		host:     "faaaar-db",
-		port:     5432,
-		user:     "postgres",
-		password: "postgres",
-		dbname:   "postgres",
-		sslmode:  "disable",
+		user:     "root",
+		password: "root",
+		protocol: "tcp(faaaar-db:3306)",
+		dbname:   "shiny_colors_db",
 	}
 
 	dsnString := dsn.string()
