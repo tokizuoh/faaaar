@@ -5,7 +5,7 @@ import (
 	"github/tokizuoh/faaaar/server/types"
 	"log"
 
-	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var db *sql.DB
@@ -21,7 +21,7 @@ func init() {
 	}
 
 	dsnString := dsn.string()
-	_db, err := sql.Open("postgres", dsnString)
+	_db, err := sql.Open("mysql", dsnString)
 	if err != nil {
 		log.Fatal(err)
 	}
