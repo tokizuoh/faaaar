@@ -5,23 +5,21 @@ import (
 	"github/tokizuoh/faaaar/server/types"
 	"log"
 
-	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var db *sql.DB
 
 func init() {
 	dsn := datasourceName{
-		host:     "faaaar-db",
-		port:     5432,
-		user:     "postgres",
-		password: "postgres",
-		dbname:   "postgres",
-		sslmode:  "disable",
+		user:     "root",
+		password: "root",
+		protocol: "tcp(faaaar-db:3306)",
+		dbname:   "shiny_colors_db",
 	}
 
 	dsnString := dsn.string()
-	_db, err := sql.Open("postgres", dsnString)
+	_db, err := sql.Open("mysql", dsnString)
 	if err != nil {
 		log.Fatal(err)
 	}

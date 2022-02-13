@@ -28,7 +28,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - 5432:5432
+      - 3306:3306
     user: root
     volumes:
       - pg-data-idol:/var/lib/pgdata
