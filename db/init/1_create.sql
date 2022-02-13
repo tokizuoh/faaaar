@@ -17,7 +17,7 @@ CREATE TABLE idol
 /* from unit_list.csv */
 CREATE TABLE unit
 (
-    `id` INT(3) NOT NULL PRIMARY KEY,
+    `id` VARCHAR(10) NOT NULL PRIMARY KEY,
     `name` VARCHAR(30)
 );
 
