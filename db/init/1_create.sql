@@ -4,7 +4,7 @@ USE shiny_colors_db;
 /* from idol_list.csv */
 CREATE TABLE idol
 (
-    `id` INT(2) NOT NULL PRIMARY KEY,
+    `id` INT(2) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `name` VARCHAR(30) NOT NULL,
     `latin_alphabet` VARCHAR(30) NOT NULL,
     `age` INT(2) NOT NULL,
