@@ -14,6 +14,11 @@ type Unit struct {
 	Idols []string
 }
 
+type GetUnitsReponse struct {
+	unitName string
+	idolName string
+}
+
 var UnitType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Unit",
 	Fields: graphql.Fields{
@@ -78,12 +83,41 @@ func UnitsByIdolID(db *sql.DB, idolId int) ([]Unit, error) {
 
 // TODO: [#43]
 func Units(db *sql.DB) ([]Unit, error) {
-	hoges := []string{"aa", "bbb"}
-	unit := Unit{
-		Name:  "hoge",
-		Idols: hoges,
+	stx, err := readSQLFile("./sqls/get_units.sql")
+	if err != nil {
+		return nil, err
 	}
-	units := []Unit{unit, unit, unit}
 
-	return units, nil
+	cfg := Sqlcfg{
+		base: stx,
+	}
+
+	rows, err := db.Query(cfg.Query())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var response []GetUnitsReponse
+	for rows.Next() {
+		var gur GetUnitsReponse
+		rows.Scan(&gur.unitName, &gur.idolName)
+
+		response = append(response, gur)
+	}
+
+	m := map[string][]string{}
+	for _, r := range response {
+		m[r.unitName] = append(m[r.unitName], r.idolName)
+	}
+
+	var result []Unit
+	for key, value := range m {
+		u := Unit{
+			Name:  key,
+			Idols: value,
+		}
+		result = append(result, u)
+	}
+
+	return result, nil
 }
