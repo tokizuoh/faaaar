@@ -6,7 +6,9 @@ INTO TABLE
   idol
 FIELDS
 TERMINATED BY ','
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(`name`, `latin_alphabet`, `age`, `height`, `birth_place`, `birth_day`, `blood_type`)
+;
 
 LOAD DATA INFILE
   '/docker-entrypoint-initdb.d/unit_list.csv'
