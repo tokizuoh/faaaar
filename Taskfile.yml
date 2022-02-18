@@ -4,6 +4,9 @@ tasks:
   build:
     cmds:
       - docker-compose up --build -d
+  up:
+    cmds:
+      - docker-compose up -d
   rbuild:
     cmds:
       - task stop
