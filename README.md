@@ -58,18 +58,39 @@ docker-compose version 1.29.2, build 5becea4c
 ### Get unitList (by idolId)
 
 ```bash
-> curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
+> curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { name idols } }' 'http://localhost:8080/graphql'
 
 # {
 # 	"data": {
 # 		"units": [
 # 			{
-# 				"id": "2",
+# 				"idols": [
+# 					"櫻木 真乃",
+# 					"八宮 めぐる",
+# 					"風野 灯織"
+# 				],
 # 				"name": "イルミネーションスターズ"
 # 			},
 # 			{
-# 				"id": "2",
+# 				"idols": [
+# 					"八宮 めぐる",
+# 					"白瀬 咲耶",
+# 					"桑山 千雪",
+# 					"西城 樹里",
+# 					"有栖川 夏葉",
+# 					"黛 冬優子",
+# 					"浅倉 透",
+# 					"市川 雛菜"
+# 				],
 # 				"name": "Sol"
+# 			},
+# 			{
+# 				"idols": [
+# 					"櫻木 真乃",
+# 					"八宮 めぐる",
+# 					"風野 灯織"
+# 				],
+# 				"name": "THE IDOLM@STER FIVE STARS!!!!!(なんどでも笑おう)"
 # 			}
 # 		]
 # 	}
