@@ -27,7 +27,7 @@ docker-compose version 1.29.2, build 5becea4c
 ### Get idolList (by age)
 
 ```bash
-$ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
+> curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
 
 # 2022/01/29 15:31:55 {
 #         "data": {
@@ -58,22 +58,22 @@ $ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age n
 ### Get unitList (by idolId)
 
 ```bash
-$ curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
+> curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
 
-# 2022/01/29 15:33:12 {
-#         "data": {
-#                 "units": [
-#                         {
-#                                 "id": "2",
-#                                 "name": "イルミネーションスターズ"
-#                         },
-#                         {
-#                                 "id": "2",
-#                                 "name": "Luna"
-#                         }
-#                 ]
-#         }
-# } 
+# {
+# 	"data": {
+# 		"units": [
+# 			{
+# 				"id": "2",
+# 				"name": "イルミネーションスターズ"
+# 			},
+# 			{
+# 				"id": "2",
+# 				"name": "Sol"
+# 			}
+# 		]
+# 	}
+# }
 ```
   
 ## Development
