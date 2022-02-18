@@ -14,8 +14,12 @@ docker-compose version 1.29.2, build 5becea4c
 ## Setup
 
 ```bash
-$ make build
-$ make run
+# install task
+# cf: https://taskfile.dev/#/installation
+> sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+
+# build
+> task build
 ```
 
 ## Usage
