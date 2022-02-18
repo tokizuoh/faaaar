@@ -13,7 +13,7 @@ var UnitsField = &graphql.Field{
 	Type: graphql.NewList(types.UnitType),
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		idolId, _ := p.Args["idolId"].(int)
-		result, err := resolvers.GetUnitsByIdolID(idolId)
+		result, err := resolvers.GetUnits(idolId)
 		if err != nil {
 			return nil, err
 		}
