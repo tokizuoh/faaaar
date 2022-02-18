@@ -44,3 +44,12 @@ func GetUnitsByIdolID(idolId int) ([]types.Unit, error) {
 
 	return units, nil
 }
+
+func GetUnits() ([]types.Unit, error) {
+	units, err := types.Units(db)
+	if err != nil {
+		return nil, err
+	}
+
+	return units, nil
+}

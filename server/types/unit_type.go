@@ -10,25 +10,25 @@ import (
 )
 
 type Unit struct {
-	Id   string
-	Name string
+	Name  string
+	Idols []string
 }
 
 var UnitType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Unit",
 	Fields: graphql.Fields{
-		"id": &graphql.Field{
-			Type: graphql.String,
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				unit := p.Source.(Unit)
-				return unit.Id, nil
-			},
-		},
 		"name": &graphql.Field{
 			Type: graphql.String,
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				unit := p.Source.(Unit)
 				return unit.Name, nil
+			},
+		},
+		"idols": &graphql.Field{
+			Type: graphql.NewList(graphql.String),
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				unit := p.Source.(Unit)
+				return unit.Idols, nil
 			},
 		},
 	},
@@ -67,10 +67,23 @@ func UnitsByIdolID(db *sql.DB, idolId int) ([]Unit, error) {
 	var result []Unit
 	for rows.Next() {
 		var u Unit
-		rows.Scan(&u.Id, &u.Name)
+		// TODO: [#43]
+		// rows.Scan(&u.Id, &u.Name)
 
 		result = append(result, u)
 	}
 
 	return result, nil
+}
+
+// TODO: [#43]
+func Units(db *sql.DB) ([]Unit, error) {
+	hoges := []string{"aa", "bbb"}
+	unit := Unit{
+		Name:  "hoge",
+		Idols: hoges,
+	}
+	units := []Unit{unit, unit, unit}
+
+	return units, nil
 }
