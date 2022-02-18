@@ -76,6 +76,12 @@ docker-compose version 1.29.2, build 5becea4c
 # }
 ```
   
+## Playground
+ 
+Please visit the page `http://localhost:8081/playground`.
+  
+![](https://user-images.githubusercontent.com/37968814/154619250-3afdda0d-8610-496a-b66a-e45dc2465c1c.png)
+  
 ## Development
   
 ### Add issue number to the commit message
