@@ -24,7 +24,7 @@ CREATE TABLE unit
 /* from idol_unit.csv */
 CREATE TABLE idol_unit
 (
-    `id` INT(3) NOT NULL PRIMARY KEY,
+    `id` INT(3) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     `idol` VARCHAR(30) NOT NULL,
     `unit` VARCHAR(30) NOT NULL
 );
