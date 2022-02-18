@@ -86,7 +86,7 @@ Please visit the page `http://localhost:8081/playground`.
   
 ### Add issue number to the commit message
   
-1. Write the content of `./git-hooks/commit-msg` in `.git/hooks/commit-msg`.
+1. Write the content of `./.git-hooks/commit-msg` in `.git/hooks/commit-msg`.
   
 2. Grant permission to shell-script.  
   
