@@ -1,6 +1,7 @@
 SELECT
     unt.name        AS unit_name,
-    idl.name          AS idol_name
+    idl.name          AS idol_name,
+    idl.id AS idol_id
     
 FROM
     idol idl

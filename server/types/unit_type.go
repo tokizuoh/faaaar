@@ -2,7 +2,6 @@ package types
 
 import (
 	"database/sql"
-	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -17,6 +16,7 @@ type Unit struct {
 type GetUnitsReponse struct {
 	unitName string
 	idolName string
+	idolId   int
 }
 
 var UnitType = graphql.NewObject(graphql.ObjectConfig{
@@ -48,41 +48,7 @@ func readSQLFile(filepath string) (string, error) {
 	return string(b), nil
 }
 
-func UnitsByIdolID(db *sql.DB, idolId int) ([]Unit, error) {
-	stx, err := readSQLFile("./sqls/get_units_by_idol_id.sql")
-	if err != nil {
-		return nil, err
-	}
-
-	var where string
-	if idolId != 0 {
-		where = fmt.Sprintf("idl.id=%d", idolId)
-	}
-
-	cfg := Sqlcfg{
-		base:  stx,
-		where: where,
-	}
-
-	rows, err := db.Query(cfg.Query())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var result []Unit
-	for rows.Next() {
-		var u Unit
-		// TODO: [#43]
-		// rows.Scan(&u.Id, &u.Name)
-
-		result = append(result, u)
-	}
-
-	return result, nil
-}
-
-// TODO: [#43]
-func Units(db *sql.DB) ([]Unit, error) {
+func Units(db *sql.DB, idolId int) ([]Unit, error) {
 	stx, err := readSQLFile("./sqls/get_units.sql")
 	if err != nil {
 		return nil, err
@@ -100,18 +66,37 @@ func Units(db *sql.DB) ([]Unit, error) {
 	var response []GetUnitsReponse
 	for rows.Next() {
 		var gur GetUnitsReponse
-		rows.Scan(&gur.unitName, &gur.idolName)
+		rows.Scan(&gur.unitName, &gur.idolName, &gur.idolId)
 
 		response = append(response, gur)
 	}
 
-	m := map[string][]string{}
+	// "unit_name": "idol_id"
+	mi := map[string][]int{}
 	for _, r := range response {
-		m[r.unitName] = append(m[r.unitName], r.idolName)
+		mi[r.unitName] = append(mi[r.unitName], r.idolId)
+	}
+
+	f := func(targetId int, idolIds []int) bool {
+		for _, id := range idolIds {
+			if id == targetId {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	// "unit_name": "idol_name"
+	mn := map[string][]string{}
+	for _, r := range response {
+		if idolId == 0 || f(idolId, mi[r.unitName]) {
+			mn[r.unitName] = append(mn[r.unitName], r.idolName)
+		}
 	}
 
 	var result []Unit
-	for key, value := range m {
+	for key, value := range mn {
 		u := Unit{
 			Name:  key,
 			Idols: value,

@@ -36,17 +36,8 @@ func GetIdolsByAge(age int) ([]types.Idol, error) {
 	return idols, nil
 }
 
-func GetUnitsByIdolID(idolId int) ([]types.Unit, error) {
-	units, err := types.UnitsByIdolID(db, idolId)
-	if err != nil {
-		return nil, err
-	}
-
-	return units, nil
-}
-
-func GetUnits() ([]types.Unit, error) {
-	units, err := types.Units(db)
+func GetUnits(idolId int) ([]types.Unit, error) {
+	units, err := types.Units(db, idolId)
 	if err != nil {
 		return nil, err
 	}
