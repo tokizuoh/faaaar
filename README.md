@@ -4,10 +4,10 @@ Learn GraphQL with THE IDOLM@STER SHINY COLORS.
 ## Development Environment
 
 ```bash
-$ docker --version
+> docker --version
 Docker version 20.10.8, build 3967b7d
 
-$ docker-compose --version
+> docker-compose --version
 docker-compose version 1.29.2, build 5becea4c
 ```
 
@@ -27,7 +27,7 @@ docker-compose version 1.29.2, build 5becea4c
 ### Get idolList (by age)
 
 ```bash
-$ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
+> curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age name height birth_place birth_day blood_type } }' 'http://localhost:8080/graphql'
 
 # 2022/01/29 15:31:55 {
 #         "data": {
@@ -58,23 +58,29 @@ $ curl -H 'Content-Type:application/json' -X POST -d '{ idols(age:20) { id age n
 ### Get unitList (by idolId)
 
 ```bash
-$ curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
+> curl -H 'Content-Type:application/json' -X POST -d '{ units(idolId: 2) { id name } }' 'http://localhost:8080/graphql'
 
-# 2022/01/29 15:33:12 {
-#         "data": {
-#                 "units": [
-#                         {
-#                                 "id": "2",
-#                                 "name": "イルミネーションスターズ"
-#                         },
-#                         {
-#                                 "id": "2",
-#                                 "name": "Luna"
-#                         }
-#                 ]
-#         }
-# } 
+# {
+# 	"data": {
+# 		"units": [
+# 			{
+# 				"id": "2",
+# 				"name": "イルミネーションスターズ"
+# 			},
+# 			{
+# 				"id": "2",
+# 				"name": "Sol"
+# 			}
+# 		]
+# 	}
+# }
 ```
+  
+## Playground
+ 
+Please visit the page `http://localhost:8081/playground`.
+  
+![](https://user-images.githubusercontent.com/37968814/154619250-3afdda0d-8610-496a-b66a-e45dc2465c1c.png)
   
 ## Development
   
