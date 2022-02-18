@@ -24,4 +24,6 @@ INTO TABLE
   idol_unit
 FIELDS
 TERMINATED BY ','
-IGNORE 1 ROWS;
+IGNORE 1 ROWS
+(`idol`, `unit`)
+;
