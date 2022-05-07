@@ -16,17 +16,17 @@ tasks:
       - docker stop faaaar-front
       - docker stop faaaar-server
       - docker stop faaaar-db
-  srv-e:
+  es:
     cmds:
       - docker exec -it faaaar-server sh
-  db-e:
+  ed:
     cmds:
       - docker exec -it faaaar-db bash
-  run-srv:
+  rs:
     cmds:
       - docker-compose exec server go mod download
       - docker-compose exec server go run main.go
-  run-frt:
+  rf:
     cmds:
       - docker-compose exec front go mod download
       - docker-compose exec front go run main.go
